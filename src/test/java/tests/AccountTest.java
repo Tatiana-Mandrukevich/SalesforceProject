@@ -18,7 +18,6 @@ public class AccountTest extends BaseTest{
                 .login(username, password);
         newAccountModalPage.openPage(NEW_ACCOUNT_MODAL_URL)
                 .openPage(NEW_ACCOUNT_MODAL_URL)//так сделала тест стабильным, так как waiter не помогал
-                .waitForNewAccountModalPageOpened()
                 .createNewAccount(account);
         accountListPage.openPage(ACCOUNT_LIST_URL);
         softAssert.assertEquals(accountListPage.getExistAccountName(account.getAccountName()), account.getAccountName());
@@ -40,10 +39,9 @@ public class AccountTest extends BaseTest{
                 .login(username, password);
         newAccountModalPage.openPage(NEW_ACCOUNT_MODAL_URL)
                 .openPage(NEW_ACCOUNT_MODAL_URL)//так сделала тест стабильным, так как waiter не помогал
-                .waitForNewAccountModalPageOpened()
                 .createNewAccount(account);
         accountListPage.openPage(ACCOUNT_LIST_URL)
-                        .clickOnAccountName(account.getAccountName());
+                .clickOnAccountName(account.getAccountName());
         softAssert.assertEquals(accountPage.getFieldValueByName("Account Name"), account.getAccountName());
         softAssert.assertEquals(accountPage.getFieldValueByName("Website"), account.getWebsite());
         softAssert.assertEquals(accountPage.getFieldValueByName("Type"), account.getType());

@@ -29,11 +29,9 @@ public class ContactTest extends BaseTest{
                 .login(username, password);
         newAccountModalPage.openPage(NEW_ACCOUNT_MODAL_URL)
                 .openPage(NEW_ACCOUNT_MODAL_URL)//так сделала тест стабильным, так как waiter не помогал
-                .waitForNewAccountModalPageOpened()
                 .createNewAccount(account);
         newContactModalPage.openPage(NEW_CONTACT_MODAL_URL)
                 .openPage(NEW_CONTACT_MODAL_URL)
-                .waitForNewContactModalPageOpened()
                 .createNewContact(contact, account);
         contactListPage.openPage(CONTACT_LIST_URL);
         softAssert.assertEquals(contactListPage.getExistAccountName(account.getAccountName()), account.getAccountName());
@@ -65,16 +63,14 @@ public class ContactTest extends BaseTest{
                 .login(username, password);
         newAccountModalPage.openPage(NEW_ACCOUNT_MODAL_URL)
                 .openPage(NEW_ACCOUNT_MODAL_URL)//так сделала тест стабильным, так как waiter не помогал
-                .waitForNewAccountModalPageOpened()
                 .createNewAccount(account);
         newContactModalPage.openPage(NEW_CONTACT_MODAL_URL)
                 .openPage(NEW_CONTACT_MODAL_URL)
-                .waitForNewContactModalPageOpened()
                 .createNewContact(contact, account);
         contactListPage.openPage(CONTACT_LIST_URL)
                 .clickOnContactName(account.getAccountName(), contact.getFirstName() + " " + contact.getLastName());
         softAssert.assertEquals(contactPage.getFieldValueByName("Name"), contact.getFirstName() + " " + contact.getLastName());
-        softAssert.assertEquals(contactPage.getFieldLinkValueByName("Account Name"), account.getAccountName());
+        softAssert.assertEquals(contactPage.getAccountNameValueByName("Account Name"), account.getAccountName());
         softAssert.assertEquals(contactPage.getFieldValueByName("Title"), contact.getTitle());
         softAssert.assertEquals(contactPage.getFieldValueByName("Description"), contact.getDescription());
         softAssert.assertEquals(contactPage.getFieldValueByName("Phone"), contact.getPhone());

@@ -11,7 +11,12 @@ import waiters.Waiter;
 
 import java.time.Duration;
 
+import static pages.AccountPage.DATA_BY_FIELD_NAME_XPATH;
+
 public class NewAccountModalPage extends BasePage {
+
+    @FindBy(xpath = "//*[@name = 'SaveEdit']")
+    public WebElement saveButton;
 
     @FindBy(name = "SaveAndNew")
     public WebElement saveAndNewButton;
@@ -29,30 +34,14 @@ public class NewAccountModalPage extends BasePage {
     }
 
     public void createNewAccount(Account account) {
-        try {
-            Thread.sleep(1000);
-        } catch (InterruptedException e) {
-            throw new RuntimeException(e);
-        }
+        Waiter.waitForPageLoaded(driver, Duration.ofSeconds(20));
         new Input(driver, "Account Name").writeTextToInput(account.getAccountName());
         new Input(driver, "Website").writeTextToInput(account.getWebsite());
         new Dropdown(driver, "Type").selectOptionForSimpleDropdown(account.getType());
         new Input(driver, "Description").writeTextToTextarea(account.getDescription());
         new Input(driver, "Phone").writeTextToInput(account.getPhone());
-        try {
-            Thread.sleep(2000);
-        } catch (InterruptedException e) {
-            throw new RuntimeException(e);
-        }
-        new Button(driver).clickOnSaveButton();
-    }
-
-    /**
-     * This is waiting for the new account modal page to be opened.
-     * @return NewAccountModalPage.
-     */
-    public NewAccountModalPage waitForNewAccountModalPageOpened() {
-        Waiter.waitForPageLoaded(driver, Duration.ofSeconds(20));
-        return this;
+        Waiter.waitForButtonToBeClickable(driver, saveButton);
+        new Button(driver).clickOnButton(saveButton);
+        Waiter.waitForElementToBeVisible(driver, DATA_BY_FIELD_NAME_XPATH, "Account Name");
     }
 }
