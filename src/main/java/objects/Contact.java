@@ -7,11 +7,12 @@ import lombok.NoArgsConstructor;
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
-public class Account {
+public class Contact {
 
-    private String accountName;
-    private String website;
-    private String type;
+    private String firstName;
+    private String lastName;
+    private String title;
     private String description;
     private String phone;
+    private String email;
 }

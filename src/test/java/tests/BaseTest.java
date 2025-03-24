@@ -20,9 +20,12 @@ public class BaseTest implements ITestConstants, IConstants {
     WebDriver driver;
     AccountListPage accountListPage;
     AccountPage accountPage;
+    ContactListPage contactListPage;
+    ContactPage contactPage;
     HomePage homePage;
     LoginPage loginPage;
     NewAccountModalPage newAccountModalPage;
+    NewContactModalPage newContactModalPage;
 
     Random random = new Random();
     SoftAssert softAssert = new SoftAssert();
@@ -30,9 +33,12 @@ public class BaseTest implements ITestConstants, IConstants {
     public void initPages() {
         accountListPage = new AccountListPage(driver);
         accountPage = new AccountPage(driver);
+        contactListPage = new ContactListPage(driver);
+        contactPage = new ContactPage(driver);
         homePage = new HomePage(driver);
         loginPage = new LoginPage(driver);
         newAccountModalPage = new NewAccountModalPage(driver);
+        newContactModalPage = new NewContactModalPage(driver);
     }
 
     @BeforeMethod

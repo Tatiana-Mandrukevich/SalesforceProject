@@ -4,15 +4,16 @@ import elements.Button;
 import elements.Dropdown;
 import elements.Input;
 import objects.Account;
-import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 import waiters.Waiter;
 
-public class NewAccountModalPage extends BasePage {
+import java.time.Duration;
 
-    public static final By ACCOUNT_NAME_INPUT = By.xpath("//*[contains(text(), 'Account Name')]/ancestor::div[contains(@part, 'input-text')]//input");
+import static pages.AccountPage.DATA_BY_FIELD_NAME_XPATH;
+
+public class NewAccountModalPage extends BasePage {
 
     @FindBy(xpath = "//*[@name = 'SaveEdit']")
     public WebElement saveButton;
@@ -33,20 +34,14 @@ public class NewAccountModalPage extends BasePage {
     }
 
     public void createNewAccount(Account account) {
+        Waiter.waitForPageLoaded(driver, Duration.ofSeconds(20));
         new Input(driver, "Account Name").writeTextToInput(account.getAccountName());
         new Input(driver, "Website").writeTextToInput(account.getWebsite());
-        new Dropdown(driver, "Type").accountSelectOption(account.getType());
+        new Dropdown(driver, "Type").selectOptionForSimpleDropdown(account.getType());
         new Input(driver, "Description").writeTextToTextarea(account.getDescription());
         new Input(driver, "Phone").writeTextToInput(account.getPhone());
-        new Button(driver).clickButton(saveButton);
-    }
-
-    /**
-     * This is waiting for the new account modal page to be opened.
-     * @return NewAccountModalPage.
-     */
-    public NewAccountModalPage waitForNewAccountModalPageOpened() {
-        Waiter.waitForPageOpened(driver, ACCOUNT_NAME_INPUT, 15);
-        return this;
+        Waiter.waitForButtonToBeClickable(driver, saveButton);
+        new Button(driver).clickOnButton(saveButton);
+        Waiter.waitForElementToBeVisible(driver, DATA_BY_FIELD_NAME_XPATH, "Account Name");
     }
 }
